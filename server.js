@@ -36,7 +36,8 @@ app.get('/', (req, res) => {
 });
 
 require('./app/routes/Classroom.routes.js')(app);
-
+require('./app/routes/user.routes.js')(app);
+//==========================
 
 dotenv.config();
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
