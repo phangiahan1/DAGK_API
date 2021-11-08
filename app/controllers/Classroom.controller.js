@@ -29,7 +29,8 @@ exports.create = (req, res) => {
         classname: req.body.classname , 
         section:req.body.section,
         subject: req.body.subject,
-        room: req.body.room
+        room: req.body.room,
+        owner: req.body.owner
     });
 
     // Save Classroom in the database

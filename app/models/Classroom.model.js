@@ -4,7 +4,8 @@ const Classeschema = mongoose.Schema({
     classname:String,
     section:String,
     subject:String,
-    room: String
+    room: String,
+    owner: String
 }, {
     timestamps: true
 });
