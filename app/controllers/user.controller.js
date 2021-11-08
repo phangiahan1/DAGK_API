@@ -3,9 +3,9 @@ const User = require('../models/User.model.js');
 // Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.fullname) {
+    if(!req.body.username) {
         return res.status(400).send({
-            message: "fullname content can not be empty"
+            message: "username content can not be empty"
         });
     }
     if(!req.body.email) {
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 
     // Create a User
     const user = new User({
-        fullname: req.body.fullname , 
+        username: req.body.username , 
         email:req.body.email,
         password: req.body.password,
         status: req.body.status
@@ -77,10 +77,31 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.findOneEmail = (req, res) => {
+    User.find({email: req.params.email})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.email
+            });            
+        }
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.email
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving User with id " + req.params.id
+        });
+    });
+};
+
 // Update a User identified by the id in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.fullname) {
+    if(!req.body.username) {
         return res.status(400).send({
             message: "User content can not be empty"
         });
@@ -88,7 +109,7 @@ exports.update = (req, res) => {
 
     // Find User and update it with the request body
     User.findByIdAndUpdate(req.params.id, {
-        fullname: req.body.fullname, 
+        username: req.body.username, 
         email:req.body.email,
         password: req.body.password,
         status: req.body.status
