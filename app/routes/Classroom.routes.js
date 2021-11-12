@@ -15,4 +15,5 @@ module.exports = (app) => {
 
     // Delete a Note with noteId
     app.delete('/classroom/:id', classroom.delete);
+
 }
