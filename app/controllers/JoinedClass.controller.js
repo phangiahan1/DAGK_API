@@ -5,7 +5,7 @@ exports.findAllbyClassId = (req, res) => {
     JoinedClass.find({
         idClass: req.params.id
     })
-    //.populate("idClass")
+    .populate("idClass")
     .populate("idUser")
     .then(joinedClass => {  
         res.send(joinedClass);
