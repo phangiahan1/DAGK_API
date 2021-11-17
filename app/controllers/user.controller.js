@@ -1,27 +1,35 @@
 const User = require('../models/User.model.js');
-
+const jwt = require('jsonwebtoken');
 // Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
     if(!req.body.username) {
         return res.status(400).send({
-            message: "username content can not be empty"
+            message: "Uername content can not be empty"
         });
     }
     if(!req.body.email) {
         return res.status(400).send({
-            message: "email content can not be empty"
+            message: "Email content can not be empty"
         });
     }
     if(!req.body.password) {
         return res.status(400).send({
-            message: "password content can not be empty"
+            message: "Password content can not be empty"
         });
     }
     if(!req.body.status) {
         return res.status(400).send({
-            message: "status content can not be empty"
+            message: "Status content can not be empty"
         });
+    }
+
+    var filter = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (!filter.test(req.body.email)) {
+        return res.status(400).send({
+            message: "Email is illegal"
+        });
+
     }
 
     // Create a User
@@ -34,8 +42,15 @@ exports.create = (req, res) => {
 
     // Save User in the database
     user.save()
-    .then(data => {
-        res.send(data);
+    .then(user => {
+        const token = jwt.sign({
+            username: user.username,
+            email: user.email,
+            password: user.password,
+        },
+        'secrect123'
+        )
+        res.status(200).send(token);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the User."
@@ -43,6 +58,38 @@ exports.create = (req, res) => {
     });
 };
 
+//login user
+exports.login = (req, res) => {
+    if(!req.body.email) {
+        return res.status(400).send({
+            message: "Email content can not be empty"
+        });
+    }
+    if(!req.body.password) {
+        return res.status(400).send({
+            message: "Password content can not be empty"
+        });
+    }
+    const user = User.findOne({
+        email:req.body.email,
+        password: req.body.password,
+    })
+    .then(user => {
+        const token = jwt.sign({
+            username: user.username,
+            email: user.email,
+            password: user.password,
+        },
+        'secrect123'
+        )
+        res.status(200).send(token);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Login fail"
+        });
+    });
+};
 // Retrieve and return all User from the database.
 exports.findAll = (req, res) => {
     User.find()
