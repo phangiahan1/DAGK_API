@@ -32,30 +32,44 @@ exports.create = (req, res) => {
 
     }
 
-    // Create a User
-    const user = new User({
-        username: req.body.username , 
-        email:req.body.email,
-        password: req.body.password,
-        status: req.body.status
-    });
+    User.findOne({email: req.body.email})
+    .then(u => {
+        if(u) {
+            return res.status(404).send({
+                message: "User already exist with email " + req.body.email
+            });            
+        }
+        else{
 
-    // Save User in the database
-    user.save()
-    .then(user => {
-        const token = jwt.sign({
-            username: user.username,
-            email: user.email,
-            password: user.password,
-        },
-        'secrect123'
-        )
-        res.status(200).send(token);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the User."
-        });
-    });
+            // Create a User
+            const user = new User({
+                username: req.body.username , 
+                email:req.body.email,
+                password: req.body.password,
+                status: req.body.status,
+                image: req.body.image,
+            });
+            // Save User in the database
+            user.save()
+            .then(user => {
+                const token = jwt.sign({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    password: user.password,
+                    image:user.image
+                },
+                'secrect123'
+                )
+                res.status(200).send(token);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while creating the User."
+                });
+            });
+        }
+    })
+    
 };
 
 //login user
@@ -76,6 +90,7 @@ exports.login = (req, res) => {
     })
     .then(user => {
         const token = jwt.sign({
+            id: user.id,
             username: user.username,
             email: user.email,
             password: user.password,
@@ -134,13 +149,13 @@ exports.findOneEmail = (req, res) => {
         }
         res.send(user);
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
+        if(err.kind === 'String') {
             return res.status(404).send({
-                message: "User not found with id " + req.params.email
+                message: "User not found with email " + req.params.email
             });                
         }
         return res.status(500).send({
-            message: "Error retrieving User with id " + req.params.id
+            message: "Error retrieving User with email " + req.params.email
         });
     });
 };
@@ -148,11 +163,11 @@ exports.findOneEmail = (req, res) => {
 // Update a User identified by the id in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.username) {
-        return res.status(400).send({
-            message: "User content can not be empty"
-        });
-    }
+    // if(!req.body.username) {
+    //     return res.status(400).send({
+    //         message: "User content can not be empty"
+    //     });
+    // }
 
     // Find User and update it with the request body
     User.findByIdAndUpdate(req.params.id, {
@@ -198,6 +213,42 @@ exports.delete = (req, res) => {
         }
         return res.status(500).send({
             message: "Could not delete User with id " + req.params.id
+        });
+    });
+};
+
+// Update a student ID of user identified by the id in the request
+exports.updateStudentId = (req, res) => {
+    // // Validate Request
+    // if(!req.body.username) {
+    //     return res.status(400).send({
+    //         message: "User content can not be empty"
+    //     });
+    // }
+
+    // Find User and update it with the request body
+    User.findByIdAndUpdate(req.params.id, {
+        // username: req.body.username, 
+        // email:req.body.email,
+        // password: req.body.password,
+        // status: req.body.status
+        studentId: req.body.studentId
+    }, {new: true})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.id
+            });
+        }
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating User with id " + req.params.id
         });
     });
 };

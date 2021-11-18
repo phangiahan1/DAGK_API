@@ -4,7 +4,7 @@ module.exports = (app) => {
     // Create a new Note
     app.post('/user', user.create);
 
-    // Create a new Note
+    // login
     app.post('/user/login', user.login);
 
     // Retrieve all user
@@ -21,4 +21,8 @@ module.exports = (app) => {
 
     // Delete a Note with noteId
     app.delete('/user/:id', user.delete);
+
+    //mapping id student
+    app.put('/user/studentId/:id', user.updateStudentId)
+
 }

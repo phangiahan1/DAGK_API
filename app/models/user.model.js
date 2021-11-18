@@ -4,6 +4,8 @@ const Userschema = mongoose.Schema({
     username:String,
     email:String,
     password:String,
+    studentId: String,
+    image: String,
     status: Boolean,
 }, {
     timestamps: true
