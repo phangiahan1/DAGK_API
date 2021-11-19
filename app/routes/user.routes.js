@@ -7,6 +7,9 @@ module.exports = (app) => {
     // login
     app.post('/user/login', user.login);
 
+    // login by google
+    app.post('/user/loginGoogle', user.loginGoogle);
+
     // Retrieve all user
     app.get('/user', user.findAll);
 
