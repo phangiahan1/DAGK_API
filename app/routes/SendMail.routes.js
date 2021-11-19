@@ -6,5 +6,5 @@ module.exports = (app) => {
 
     // // Find all user in classroom 
     // app.get('/classroom/:id/alluser', joinedClass.findAllbyClassId);
-     app.post('/send_mail/:email', sendmail.sendmailTeacher);
+     app.post('/send_mail_teacher', sendmail.sendmailTeacher);
 }
