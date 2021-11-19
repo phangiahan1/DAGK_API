@@ -1,14 +1,17 @@
 const nodemailer = require("nodemailer");
 
 exports.sendmailTeacher = (req, res) => {
+    const email = req.body.email;
+    const owner = req.body.owner;
+    const classname = req.body.classname;
+
     const output = `
-    <p>Hello,</p>
-    <p>invited you to co-teach</p>
+    <p>Hello,`+ email + `</p>
+    <p> `+ owner + ` invited you to co-teach <b>`+ classname + `</b></p>
     <button><a href="http://localhost:5000">Join</a></button>
     <h3>If you accept, your contact information will be shared with the class members and applications they authorize to use Classroom.</h3>
     <h3>Forward to only those you trust. Anyone with this email may be able to accept the invitation.</h3>
   `;
-    const email = req.params.email;
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     //let testAccount = await nodemailer.createTestAccount();
