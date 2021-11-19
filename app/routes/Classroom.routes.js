@@ -7,6 +7,9 @@ module.exports = (app) => {
     // Retrieve all classroom
     app.get('/classroom', classroom.findAll);
 
+    //Find class room user create
+    app.get('/classroom/:email', classroom.findcreate);
+
     // Retrieve a single Note with noteId
     app.get('/classroom/:id', classroom.findOne);
 
