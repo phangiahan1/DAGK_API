@@ -32,7 +32,11 @@ exports.findClassJoinByMail = (req, res) => {
                 .populate("idClass")
                 //.populate("idUser")
                 .then(joinedClass => {
-                    res.send(joinedClass);
+                    let x = [];
+                    for (var i = 0; i < joinedClass.length; i++) {
+                        x.push(joinedClass[i].idClass);
+                    }
+                    res.send(x);
                 }).catch(err => {
                     res.status(500).send({
                         message: err.message || "Some error occurred while retrieving Joined Class."
