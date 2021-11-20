@@ -6,7 +6,7 @@ const Userschema = mongoose.Schema({
     email:String,
     password:String,
     studentId: String,
-    image: String,
+    picture: String,
     status: Boolean,
     salt : String,
 }, {
@@ -21,9 +21,16 @@ Userschema.methods.setPassword = function(pass) {
   
     // Hashing user's salt and password with 1000 iterations, 
      
-    this.password = crypto.pbkdf2Sync(pass, this.salt,  
-    1000, 64, `sha512`).toString(`hex`); 
+    this.password = crypto.pbkdf2Sync(pass, this.salt,1000, 64, `sha512`).toString(`hex`); 
 }; 
+
+// Method to set salt and hash the password for a user 
+Userschema.methods.setPasswordWithSalt = function(pass,salt) { 
+     
+       // Hashing user's salt and password with 1000 iterations, 
+        
+       this.password = crypto.pbkdf2Sync(pass, salt,1000, 64, `sha512`).toString(`hex`); 
+   }; 
   
 // Method to check the entered password is correct or not 
 Userschema.methods.validPassword = function(pass) {
