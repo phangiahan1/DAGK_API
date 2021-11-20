@@ -56,6 +56,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findcreate = (req, res) => {
+    Classroom.find({owner: req.params.email})
+    .then(classroom => {
+        res.send(classroom);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving Classroom."
+        });
+    });
+};
+
 // Find a single Classroom with a id
 exports.findOne = (req, res) => {
     Classroom.findById(req.params.id)
