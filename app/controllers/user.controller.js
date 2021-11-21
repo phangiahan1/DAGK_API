@@ -136,6 +136,7 @@ exports.loginGoogle = (req, res) => {
                 username: user.username,
                 email: user.email,
                 password: user.password,
+                picture:user.picture
             },
             'secrect123'
             )
