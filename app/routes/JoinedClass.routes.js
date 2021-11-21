@@ -13,5 +13,6 @@ module.exports = (app) => {
 
     //join class by link (:id : id class)
     app.post('/:id/invite_teacher', joinedClass.inviteTeacher);
+    app.post('/:id/invite_student', joinedClass.inviteStudent);
 
 }
