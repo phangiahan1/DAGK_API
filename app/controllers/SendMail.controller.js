@@ -25,8 +25,8 @@ exports.sendmailTeacher = (req, res) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'phanhan226@gmail.com', // generated ethereal user
-            pass: 'phangiahan220918', // generated ethereal password
+            user: 'pghanit@gmail.com', // generated ethereal user
+            pass: 'PhanGiaHan220918', // generated ethereal password
         },
         tls: {
             // do not fail on invalid certs
@@ -36,7 +36,7 @@ exports.sendmailTeacher = (req, res) => {
 
     // send mail with defined transport object
     let info = transporter.sendMail({
-        from: '"TH CLASSROOM" <phanhan22@example.com>', // sender address
+        from: '"TH CLASSROOM" <pghanit@example.com>', // sender address
         to: email, // list of receivers
         subject: "Invitation to co-teach", // Subject line
         text: "Hello world?", // plain text body
@@ -72,8 +72,8 @@ exports.sendmailStudent = (req, res) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'phanhan226@gmail.com', // generated ethereal user
-            pass: 'phangiahan220918', // generated ethereal password
+            user: 'pghanit@gmail.com', // generated ethereal user
+            pass: 'PhanGiaHan220918', // generated ethereal password
         },
         tls: {
             // do not fail on invalid certs
@@ -83,7 +83,7 @@ exports.sendmailStudent = (req, res) => {
 
     // send mail with defined transport object
     let info = transporter.sendMail({
-        from: '"TH CLASSROOM" <phanhan22@example.com>', // sender address
+        from: '"TH CLASSROOM" <pghanit@example.com>', // sender address
         to: email, // list of receivers
         subject: "Invitation to co-teach", // Subject line
         text: "Hello world?", // plain text body

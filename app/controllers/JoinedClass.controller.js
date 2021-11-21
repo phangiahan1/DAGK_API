@@ -145,7 +145,7 @@ exports.inviteStudent = (req, res) => {
             const joinedNew = new JoinedClass({
                 idClass: req.params.id,
                 idUser: user[0]._id,
-                type: true, //type false stu
+                type: false, //type false stu
                 hide: false
             });
             joinedNew.save()
