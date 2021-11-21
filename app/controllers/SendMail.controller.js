@@ -4,11 +4,14 @@ exports.sendmailTeacher = (req, res) => {
     const email = req.body.email;
     const owner = req.body.owner;
     const classname = req.body.classname;
+    const idclass = req.body.idclass;
+    const link = "http://localhost:3000/"+idclass+"/invite_teacher";
+    console.log(link);
 
     const output = `
     <p>Hello,`+ email + `</p>
-    <p> `+ owner + ` invited you to co-teach <b>`+ classname + `</b></p>
-    <button><a href="http://localhost:5000">Join</a></button>
+    <p> `+ owner + ` invited you to co-teach <h1><b>` + classname + `</b><h1></p>
+    <button><a href="` + link + `">Join</a></button>
     <h3>If you accept, your contact information will be shared with the class members and applications they authorize to use Classroom.</h3>
     <h3>Forward to only those you trust. Anyone with this email may be able to accept the invitation.</h3>
   `;
